@@ -44,19 +44,40 @@ return {
       require('CopilotChat').setup(opts)
       vim.api.nvim_create_autocmd('BufEnter', {
         pattern = 'copilot-*',
+        group = vim.api.nvim_create_augroup('copilot-chat-buf-enter', { clear = true }),
         callback = function()
-          -- add description for which-key plugin
-          require('which-key').register({
-            C = {
-              name = '[C]opilot',
-              d = 'Show diff',
-              p = 'Show system prompt',
-              s = 'Show user selection',
-            },
-          }, { prefix = '<leader>' })
+          local bufnr = vim.api.nvim_get_current_buf()
+          require('which-key').register {
+            ['<leader>Cd'] = { name = '[C]opilot [D]iff', _ = 'which_key_ignore', buffer = bufnr },
+            ['<leader>Cp'] = { name = '[C]opilot [P]rompt', _ = 'which_key_ignore', buffer = bufnr },
+            ['<leader>Cs'] = { name = '[C]opilot [S]election', _ = 'which_key_ignore', buffer = bufnr },
+          }
         end,
       })
     end,
-    -- See Commands section for default commands if you want to lazy load on them
+    keys = {
+      {
+        '<leader>C',
+        desc = '[C]opilot',
+      },
+      {
+        '<leader>Cq',
+        function()
+          local input = vim.fn.input 'Quick Chat: '
+          if input ~= '' then
+            require('CopilotChat').ask(input, { selection = require('CopilotChat.select').buffer })
+          end
+        end,
+        desc = '[C]opilotChat [Q]uick Chat',
+      },
+      -- add keybinding for opening chat
+      {
+        '<leader>Co',
+        function()
+          require('CopilotChat').open()
+        end,
+        desc = '[C]opilotChat [O]pen',
+      },
+    },
   },
 }
