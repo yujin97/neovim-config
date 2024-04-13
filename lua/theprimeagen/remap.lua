@@ -15,7 +15,6 @@ vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]])
 -- This is going to get me cancelled
 vim.keymap.set('i', '<C-c>', '<Esc>')
 
-vim.keymap.set('n', '<leader>ss', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '[S]ubstitute' })
 vim.keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { silent = true, desc = 'Make E[x]ecutable' })
 
 vim.keymap.set('n', '<leader>so', function()
