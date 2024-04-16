@@ -549,7 +549,9 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        tsserver = {},
+        tsserver = {
+          autostart = false,
+        },
         --
 
         lua_ls = {
@@ -567,6 +569,20 @@ require('lazy').setup({
           },
         },
       }
+
+      local non_mason_servers = {
+        flow = {},
+      }
+
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
+        callback = function()
+          if not require('lspconfig').util.root_pattern '.flowconfig'(vim.fn.getcwd()) then
+            require('lspconfig.configs')['tsserver'].launch()
+            return
+          end
+        end,
+      })
 
       -- Ensure the servers and tools above are installed
       --  To check the current status of installed tools and/or manually install
@@ -596,6 +612,11 @@ require('lazy').setup({
           end,
         },
       }
+
+      for server_name, server in pairs(non_mason_servers) do
+        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+        require('lspconfig')[server_name].setup(server)
+      end
     end,
   },
 
