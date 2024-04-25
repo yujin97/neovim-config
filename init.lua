@@ -553,7 +553,7 @@ require('lazy').setup({
           autostart = false,
         },
         --
-
+        ['eslint-lsp'] = {},
         lua_ls = {
           -- cmd = {...},
           -- filetypes { ...},
