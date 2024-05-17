@@ -568,6 +568,7 @@ require('lazy').setup({
             },
           },
         },
+        jsonls = {},
       }
 
       local non_mason_servers = {
