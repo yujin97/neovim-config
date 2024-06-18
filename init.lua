@@ -558,7 +558,20 @@ require('lazy').setup({
         tsserver = {
           autostart = false,
         },
-        --
+        cssls = {
+          settings = {
+            css = { validate = true, lint = {
+              unknownAtRules = 'ignore',
+            } },
+            scss = { validate = true, lint = {
+              unknownAtRules = 'ignore',
+            } },
+            less = { validate = true, lint = {
+              unknownAtRules = 'ignore',
+            } },
+          },
+        },
+        tailwindcss = {},
         ['eslint'] = {},
         lua_ls = {
           -- cmd = {...},
