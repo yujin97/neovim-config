@@ -668,6 +668,8 @@ require('lazy').setup({
         typescript = { { 'prettierd', 'prettier' } },
         typescriptreact = { { 'prettierd', 'prettier' } },
         ['typescript.tsx'] = { { 'prettierd', 'prettier' } },
+        css = { { 'prettierd', 'prettier' } },
+        scss = { { 'prettierd', 'prettier' } },
       },
     },
     config = function(_, opts)
